@@ -1,4 +1,4 @@
-#list_directory_names_harmy.py
+#get_directory_structure.py
 #Generates text file of all files and folders in specified directory
 #Usage: list_directory_names_harmy.py <directory to be searched>
 import os	#Used for getting directory information
