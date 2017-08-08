@@ -1,9 +1,9 @@
 #get_directory_structure.py
 #Generates text file of all files and folders in specified directory
 #Usage: list_directory_names_harmy.py <directory to be searched>
-import os	#Used for getting directory information
-import sys	#Used for sys.exit and arguments
-import io	#Used to avoid encoding errors
+import os  #Used for getting directory information
+import sys #Used for sys.exit and arguments
+import io  #Used to avoid encoding errors
 
 #Recursive function which searches through directories
 def traverse(directory, depth):
@@ -45,12 +45,12 @@ def traverse(directory, depth):
 
 #Function to convert bytes to human readable formats
 def get_human_readable(size):
-    suffixes = ['B','KB','MB','GB','TB']
-    suffixIndex = 0
-    while size > 1024 and suffixIndex < 4:
-        suffixIndex += 1	#increment the index of the suffix
-        size = size/1024.0	#apply the division
-    return "%.2f%s"%(size, suffixes[suffixIndex])
+	suffixes = ['B','KB','MB','GB','TB']
+	suffixIndex = 0
+	while size > 1024 and suffixIndex < 4:
+		suffixIndex += 1   #increment the index of the suffix
+		size = size/1024.0 #apply the division
+	return "%.2f%s"%(size, suffixes[suffixIndex])
 
 
 #Beginning of Script Logic
@@ -75,9 +75,9 @@ if not os.path.exists(sys.argv[1]):
 	sys.exit(1)
 
 #Variables to return number of files/directories, and total filesize
-file_count		= 0
-directory_count	= 0
-file_size		= 0
+file_count      = 0
+directory_count = 0
+file_size       = 0
 
 #Calling traverse function
 traverse(directory, 0)
