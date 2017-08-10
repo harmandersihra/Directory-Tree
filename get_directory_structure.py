@@ -5,6 +5,11 @@ import os   # Used for getting directory information
 import sys  # Used for sys.exit and arguments
 import io   # Used to avoid encoding errors
 
+# Global variables for number of directories and files, and filesizes
+directory_count = 0
+file_size = 0
+file_count = 0
+
 
 # Recursive function which searches through directories
 def traverse(directory, depth):
@@ -14,7 +19,7 @@ def traverse(directory, depth):
     # Make sure directory is accessible
     try:
         files = os.listdir(directory)
-    except:
+    except Exception as err:
         print("Could not access: " + directory)
         return
 
@@ -26,25 +31,25 @@ def traverse(directory, depth):
 
         # Adding formatting
         for i in range(0, depth):
-            report.write("\t")
+            report_write("\t")
 
         # Getting full path
         full_path = directory + "\\" + file
 
         # If it's a directory, print to report and traverse further
         if os.path.isdir(full_path):
-            report.write(file + "\n")
+            report_write(file + "\n")
             directory_count += 1
             traverse(full_path, depth + 1)
 
         # If it's a file, add file size
         elif os.path.isfile(full_path):
-            report.write(file + "\n")
+            report_write(file + "\n")
             file_count += 1
             file_size += os.path.getsize(full_path)
 
     # Add new line to separate
-    report.write("\n")
+    report_write("\n")
 
 
 # Function to convert bytes to human readable formats
@@ -57,9 +62,16 @@ def get_human_readable(size):
     return "%.2f%s" % (size, suffixes[suffixIndex])
 
 
+# Function to write to file
+def report_write(line):
+    report = io.open(os.getcwd() + "/report.txt", "a", encoding="utf-8")
+    report.write(line)
+    report.close()
+
+
 # Main function
 def main():
-    print("list_directory_names_harmy.py running")
+    print("get_directory_structure.py running")
 
     # Ensuring that arguments are correct
     if len(sys.argv) != 2:
@@ -69,6 +81,7 @@ def main():
 
     # Create file in current working directory
     report = io.open(os.getcwd() + "/report.txt", "w", encoding="utf-8")
+    report.close()
 
     # If final backslash is present, get rid of it
     directory = sys.argv[1]
@@ -80,11 +93,6 @@ def main():
         print("Invalid directory entered")
         sys.exit(1)
 
-    # Variables to return number of files/directories, and total filesize
-    file_count = 0
-    directory_count = 0
-    file_size = 0
-
     # Calling traverse function
     traverse(directory, 0)
 
@@ -95,7 +103,6 @@ def main():
     print("Check report.txt for list of all files and directories found")
 
     # Ending program
-    report.close()
     sys.exit(0)
 
 
