@@ -57,42 +57,48 @@ def get_human_readable(size):
     return "%.2f%s" % (size, suffixes[suffixIndex])
 
 
-# Beginning of Script Logic
-print("list_directory_names_harmy.py running")
+# Main function
+def main():
+    print("list_directory_names_harmy.py running")
 
-# Ensuring that arguments are correct
-if len(sys.argv) != 2:
-    print("Improper number of arguments.")
-    print("Usage: list_directory_names_harmy.py <directory to be searched>")
-    sys.exit(1)
+    # Ensuring that arguments are correct
+    if len(sys.argv) != 2:
+        print("Improper number of arguments.")
+        print("Usage: list_directory_names_harmy.py <directory to be searched>")
+        sys.exit(1)
 
-# Create file in current working directory
-report = io.open(os.getcwd() + "/report.txt", "w", encoding="utf-8")
+    # Create file in current working directory
+    report = io.open(os.getcwd() + "/report.txt", "w", encoding="utf-8")
 
-# If final backslash is present, get rid of it
-directory = sys.argv[1]
-if directory.endswith("\\"):
-    directory = directory[:-1]
+    # If final backslash is present, get rid of it
+    directory = sys.argv[1]
+    if directory.endswith("\\"):
+        directory = directory[:-1]
 
-# Making sure directory is valid
-if not os.path.exists(sys.argv[1]):
-    print("Invalid directory entered")
-    sys.exit(1)
+    # Making sure directory is valid
+    if not os.path.exists(sys.argv[1]):
+        print("Invalid directory entered")
+        sys.exit(1)
 
-# Variables to return number of files/directories, and total filesize
-file_count = 0
-directory_count = 0
-file_size = 0
+    # Variables to return number of files/directories, and total filesize
+    file_count = 0
+    directory_count = 0
+    file_size = 0
 
-# Calling traverse function
-traverse(directory, 0)
+    # Calling traverse function
+    traverse(directory, 0)
 
-# Printing stats
-print("Total Files:\t\t" + str(file_count))
-print("Total Directories:\t" + str(directory_count))
-print("Total Size:\t\t" + get_human_readable(file_size))
-print("Check report.txt for list of all files and directories found")
+    # Printing stats
+    print("Total Files:\t\t" + str(file_count))
+    print("Total Directories:\t" + str(directory_count))
+    print("Total Size:\t\t" + get_human_readable(file_size))
+    print("Check report.txt for list of all files and directories found")
 
-# Ending program
-report.close()
-sys.exit(0)
+    # Ending program
+    report.close()
+    sys.exit(0)
+
+
+# Needed for main function
+if __name__ == "__main__":
+    main()
